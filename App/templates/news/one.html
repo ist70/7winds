@@ -1,0 +1,24 @@
+{% extends "Layouts/index.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="container">
+        <button style="background-color: aliceblue"><a href="/">На главную</a></button>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h1>{{ article.title }}</h1>
+            </div>
+            <div class="panel-body">{{ article.description }}</div>
+            <div class="panel-footer" style="font-size: small"><p><b>Автор:</b><i>{{ article.author.firstname }} {{
+                article.author.lastname }}</i></p>
+
+                <p><b>Опубликовано: {{ article.published|date('d-m-Y H:i') }}</b></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block memory %} {{ resource }} {% endblock %}

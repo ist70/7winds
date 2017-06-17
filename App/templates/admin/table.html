@@ -1,0 +1,39 @@
+{% extends "Layouts/index.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Таблица</h1>
+    {% if data %}
+    <table style="width: 30%; border-style: solid">
+        <thead>
+        <tr style="border: solid">
+            <td>Данные</td>
+            {% for name in func %}
+            <td style="border: solid">
+                {{ name }}
+            </td>
+            {% endfor %}
+        </tr>
+        </thead>
+
+        {% for key, row in data %}
+        <tr style="border: solid">
+            <td> {{ key }}</td>
+            {% for item in row %}
+            <td style="border: solid">
+                {{ item|number_format(2) }}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+    </table>
+    {% else %}
+    <h2>Нет данных для таблицы</h2>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block memory %}{{ resource }}{% endblock %}

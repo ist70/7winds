@@ -1,0 +1,1 @@
+08-03-2016 15:03:11  D:\OpenServerNew\OpenServer\domains\PHP-2-profit\lesson7\index.php  в строке: 32 код ошибки:  0  Страница не найдена. Ошибка 404

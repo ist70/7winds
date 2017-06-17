@@ -1,0 +1,7 @@
+{
+  "require": {
+    "swiftmailer/swiftmailer": "5.*",
+    "twig/twig": "1.*",
+    "phpunit/php-timer": "~1.0"
+  }
+}

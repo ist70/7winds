@@ -1,0 +1,35 @@
+{% extends "Layouts/index.html" %}
+
+{% block content %}
+
+<div class="container">
+    <article style="margin: 10%">
+        <section style="padding-right: 20%">
+
+            <h1>{{ article.id_news is empty ? 'Добавление новости' : 'Редактирование' }}<i style="color: green">{{
+                article.title }}</i></h1>
+
+            <form method="post" action="/admin/save/">
+                <h3>Заголовок</h3>
+                <input type="hidden" name="id_news" value="{{ article.id_news }}">
+                <input type="text" name="title" value="{{ article.title|e }}">
+
+                <h3>Текст новости</h3>
+
+                <p><textarea cols="100" rows="4" name="description">{{ article.description|e }}</textarea>
+                </p>
+
+                <button type="submit" style="background-color: green">Сохранить</button>
+                <button type="reset" style="background-color: aliceblue"><a
+                        href="/admin/one/">Отменить</a></button>
+            </form>
+            {% if id is not empty %}
+            <p style="margin-bottom: 2px"><b>Опубликовано:</b> {{ article.published }}</p>
+            <p style="margin-top: 2px "><b>Автор
+                : </b><i> {{ article.author.firstname }} {{ article.author.lastname }}</i></p>
+            {% endif %}
+        </section>
+    </article>
+</div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "Layouts/index.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="alert alert-danger" role="alert" style="font-size: large; ">
+        {% if errors is iterable %}
+        {% for error in errors %}
+                <span class="glyphicon glyphicon-exclamation-sign"
+                      aria-hidden="true"></span>{{ error.message }}
+                <p></p>
+        {% endfor %}
+        {% else %}
+            <span class="glyphicon glyphicon-exclamation-sign"
+                  aria-hidden="true"></span>{{ errors.message }}
+        {% endif %}
+    </div>
+    <p><a href="/admin/">Вернуться на главную страницу</a></p>
+</div>
+
+{% endblock %}
