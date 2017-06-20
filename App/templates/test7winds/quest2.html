@@ -1,0 +1,15 @@
+{% extends "Layouts/index.html" %}
+
+{% block content %}
+
+<div class="container">
+    {% for key, data in result %}
+    {{ key }} {{ data }}
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block memory %}
+{{ resource }}
+{% endblock %}
