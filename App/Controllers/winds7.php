@@ -123,7 +123,7 @@ class winds7 extends Controller
         }
         --$level;
     }
-
+// ПЕЧАТАЕТ так:
 //A
 //  ->C
 //     ->C1
@@ -136,4 +136,18 @@ class winds7 extends Controller
 //  ->B
 //     ->E
 //        ->F
+
+// А ДОЛЖНО быть так:
+//A
+//  ->C
+//     ->C1
+//         ->C11
+//              ->C21
+//              ->C22
+//         ->C12
+//     ->C2
+//  ->D
+//B
+//  ->E
+//  ->F
 }
