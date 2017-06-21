@@ -36,6 +36,18 @@ class Quest extends Model
                 static::class, [':parent' => $parent, ':child' => $child])
                 ?: false;
     }
+    public static function findByParentNotChild()
+    {
+        $db = Db::instance();
+        $t1 = static::TABLE;
+        return $res =
+            $db->query(
+                'SELECT t1.id, t1.name, t1.parent, parent2.parent as parent2
+                 FROM ' . $t1 . ' AS t1 JOIN ' . $t1 . ' AS parent2 ON  t1.parent = parent2.id
+                 WHERE t1.id NOT IN (SELECT parent FROM ' . $t1 . ') AND parent2.parent !=0' ,
+                static::class, [])
+                ?: false;
+    }
 }
 //SELECT
 //  t1.*
@@ -50,3 +62,11 @@ class Quest extends Model
 //  t1.id
 //HAVING
 //  count(t2.id) >= 3
+
+//SELECT t1.id, t1.name, t1.parent, parent2.parent as parent2 FROM `Quest3` as t1
+//JOIN Quest3 as parent2 ON t1.parent = parent2.id
+//WHERE t1.id
+//NOT IN (
+//    SELECT parent FROM `Quest3`
+//)
+//AND parent2.parent != 0

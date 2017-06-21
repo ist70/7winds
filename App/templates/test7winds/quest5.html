@@ -1,0 +1,16 @@
+{% extends "Layouts/index.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h3>В базе данных записи без потомков, но с 2-мя старшими родителями :</h3>
+    {% for data in result %}
+    <p>Имя " {{ data.name }} "</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block memory %}
+{{ resource }}
+{% endblock %}

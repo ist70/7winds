@@ -112,6 +112,14 @@ class winds7 extends Controller
                 'resource' => \PHP_Timer::resourceUsage()
             ]);
         }
+        if ($post['quest'] == 5) {
+            $result = Quest::findByParentNotChild();
+            $quest = 'quest' . $post['quest'];
+            $this->view->render('/test7winds/' . $quest . '.html', [
+                'result' => $result,
+                'resource' => \PHP_Timer::resourceUsage()
+            ]);
+        }
     }
 
     private function setTree($quest, $parent = 0, $level = 0)
