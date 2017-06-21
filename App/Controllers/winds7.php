@@ -112,11 +112,32 @@ class winds7 extends Controller
                 'resource' => \PHP_Timer::resourceUsage()
             ]);
         }
+
         if ($post['quest'] == 5) {
             $result = Quest::findByParentNotChild();
             $quest = 'quest' . $post['quest'];
             $this->view->render('/test7winds/' . $quest . '.html', [
                 'result' => $result,
+                'resource' => \PHP_Timer::resourceUsage()
+            ]);
+        }
+
+        if ($post['quest'] == 6) {
+            $data = [];
+            $result = [];
+            for ($i = 0; $i < 1000000; $i++) {
+                $data[] = rand(100000, 1500000);
+            }
+            foreach (array_count_values($data) as $key => $val) {
+                if ($val === 1) {
+                    continue;
+                }
+                $result[] = $key;
+            }
+            $quest = 'quest' . $post['quest'];
+            $this->view->render('/test7winds/' . $quest . '.html', [
+                'result' => $result,
+                'count' => count($result),
                 'resource' => \PHP_Timer::resourceUsage()
             ]);
         }
