@@ -87,20 +87,55 @@ class winds7 extends Controller
 //и т.д.
         if ($post['quest'] == 3) {
             $quest = Quest::findAll();
-
-//            foreach ($quest3 as $data){
-//                $this->three[][$data->parent] = $data;
-//            }
             foreach ($quest as $item) {
                 $this->tree[$item->id] = [$item->parent, $item->name];
             }
             echo '<pre>';
             $this->setTree($this->tree);
-            die;
+            foreach ($quest as $item) {
+                $newtree[$item->parent][] = [$item->id, $item->name];
+            }
+            echo '<pre>';
+            $this->setTree2($newtree);
             $quest = 'quest' . $post['quest'];
             $this->view->render('/test7winds/' . $quest . '.html', [
                 'resource' => \PHP_Timer::resourceUsage()
             ]);
+        }
+    }
+
+    private function setTree2($quest, $parent = 0, $level = 0)
+    {
+        foreach ($quest as $key => $item) {
+            if ($key == $parent) {
+                if (is_array($item)) {
+                    foreach ($item as $key2 => $data) {
+                        if (array_key_exists($data[0], $quest)) {
+                            for ($i = 1; $i <= $level; $i++) {
+                                echo '  ';
+                            }
+                            if ($key != 0) {
+                                echo '->';
+                            }
+                            echo $data[1] . '<br>';
+                            unset($quest[$key][$key2]);
+                            $this->setTree2($quest, $data[0], ++$level);
+                            --$level;
+                        } else {
+                            for ($i = 1; $i <= $level; $i++) {
+                                echo '  ';
+                            }
+                            if ($key != 0) {
+                                echo '->';
+                            }
+                            echo $data[1] . '<br>';
+                        }
+                    }
+                    --$level;
+                } else {
+
+                }
+            }
         }
     }
 
@@ -115,39 +150,12 @@ class winds7 extends Controller
                     echo '->';
                 }
                 echo $item[1] . '<br>';
-                //echo $item[1] . ' '. $key . ' '. $item[0] . '<br>';
                 unset($quest[$key]);
                 $this->setTree($quest, $key, ++$level);
+                --$level;
             }
 
         }
-        --$level;
     }
-// ПЕЧАТАЕТ так:
-//A
-//  ->C
-//     ->C1
-//         ->C11
-//              ->C21
-//                   ->C22
-//              ->C12
-//         ->C2
-//     ->D
-//  ->B
-//     ->E
-//        ->F
 
-// А ДОЛЖНО быть так:
-//A
-//  ->C
-//     ->C1
-//         ->C11
-//              ->C21
-//              ->C22
-//         ->C12
-//     ->C2
-//  ->D
-//B
-//  ->E
-//  ->F
 }
