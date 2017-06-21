@@ -9,9 +9,6 @@ use App\Core\Mvc\Exception404;
 class winds7 extends Controller
 {
 
-    private $tree = [];
-    private $parent1 = 0, $parent2 = 0;
-
     public function actionTest7winds()
     {
         $this->view->render('/test7winds/index.html', [
@@ -86,13 +83,13 @@ class winds7 extends Controller
 //PPP
 //и т.д.
         if ($post['quest'] == 3) {
-            $quest = Quest::findAll();
-            foreach ($quest as $item) {
-                $this->tree[$item->id] = [$item->parent, $item->name];
+            $data = Quest::findAll();
+            foreach ($data as $item) {
+                $tree[$item->id] = [$item->parent, $item->name];
             }
             echo '<pre>';
-            $this->setTree($this->tree);
-            foreach ($quest as $item) {
+            $this->setTree($tree);
+            foreach ($data as $item) {
                 $newtree[$item->parent][] = [$item->id, $item->name];
             }
             echo '<pre>';
@@ -101,6 +98,38 @@ class winds7 extends Controller
             $this->view->render('/test7winds/' . $quest . '.html', [
                 'resource' => \PHP_Timer::resourceUsage()
             ]);
+        }
+        if ($post['quest'] == 4) {
+            $parent = 0;
+            $child = 3;
+            $result = Quest::findByParentAndChild($parent, $child);
+            $quest = 'quest' . $post['quest'];
+            $this->view->render('/test7winds/' . $quest . '.html', [
+                'result' => $result,
+                'parent' => $parent,
+                'child' => $child,
+                'count' => count($result),
+                'resource' => \PHP_Timer::resourceUsage()
+            ]);
+        }
+    }
+
+    private function setTree($quest, $parent = 0, $level = 0)
+    {
+        foreach ($quest as $key => $item) {
+            if ($item[0] == $parent) {
+                for ($i = 1; $i <= $level; $i++) {
+                    echo '  ';
+                }
+                if ($level != 0) {
+                    echo '->';
+                }
+                echo $item[1] . '<br>';
+                unset($quest[$key]);
+                $this->setTree($quest, $key, ++$level);
+                --$level;
+            }
+
         }
     }
 
@@ -136,25 +165,6 @@ class winds7 extends Controller
 
                 }
             }
-        }
-    }
-
-    private function setTree($quest, $parent = 0, $level = 0)
-    {
-        foreach ($quest as $key => $item) {
-            if ($item[0] == $parent) {
-                for ($i = 1; $i <= $level; $i++) {
-                    echo '  ';
-                }
-                if ($level != 0) {
-                    echo '->';
-                }
-                echo $item[1] . '<br>';
-                unset($quest[$key]);
-                $this->setTree($quest, $key, ++$level);
-                --$level;
-            }
-
         }
     }
 

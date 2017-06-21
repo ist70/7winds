@@ -1,0 +1,16 @@
+{% extends "Layouts/index.html" %}
+
+{% block content %}
+
+<div class="container">
+<h3>В базе данных  {{ count }} записей c {{ parent }} родителями, с {{ child }} и более потомками</h3>
+    {% for data in result %}
+     <p>Имя " {{ data.name }} ", родителей = {{ parent }}, потомков = {{ data.count }}.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block memory %}
+{{ resource }}
+{% endblock %}
